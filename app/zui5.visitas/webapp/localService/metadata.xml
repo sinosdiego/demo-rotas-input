@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+        <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+        <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
+        <edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema Namespace="DemoRota" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+            <EntityContainer Name="EntityContainer">
+                <EntitySet Name="Locais" EntityType="DemoRota.Locais">
+                    <NavigationPropertyBinding Path="visitas" Target="VisitasAll"/>
+                    <NavigationPropertyBinding Path="SiblingEntity" Target="Locais"/>
+                </EntitySet>
+                <EntitySet Name="Visitas" EntityType="DemoRota.Visitas">
+                    <NavigationPropertyBinding Path="local" Target="Locais"/>
+                </EntitySet>
+                <EntitySet Name="VisitasAll" EntityType="DemoRota.VisitasAll">
+                    <NavigationPropertyBinding Path="local" Target="Locais"/>
+                    <NavigationPropertyBinding Path="SiblingEntity" Target="VisitasAll"/>
+                </EntitySet>
+            </EntityContainer>
+            <EntityType Name="Locais">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                    <PropertyRef Name="IsActiveEntity"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="nome" Type="Edm.String" MaxLength="40"/>
+                <Property Name="endereco" Type="Edm.String" MaxLength="100"/>
+                <Property Name="cidade" Type="Edm.String" MaxLength="50"/>
+                <Property Name="bairro" Type="Edm.String" MaxLength="50"/>
+                <Property Name="estado" Type="Edm.String" MaxLength="3"/>
+                <NavigationProperty Name="visitas" Type="Collection(DemoRota.VisitasAll)">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+                <Property Name="IsActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="true"/>
+                <Property Name="HasActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <NavigationProperty Name="DraftAdministrativeData" Type="DemoRota.DraftAdministrativeData" ContainsTarget="true"/>
+                <NavigationProperty Name="SiblingEntity" Type="DemoRota.Locais"/>
+            </EntityType>
+            <EntityType Name="Visitas">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="data_chamado" Type="Edm.Date"/>
+                <Property Name="data_atendimento" Type="Edm.Date"/>
+                <Property Name="atendido" Type="Edm.Boolean"/>
+                <Property Name="descricao" Type="Edm.String" MaxLength="100"/>
+                <Property Name="observacao" Type="Edm.String" MaxLength="500"/>
+                <NavigationProperty Name="local" Type="DemoRota.Locais">
+                    <ReferentialConstraint Property="local_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <Property Name="local_ID" Type="Edm.Guid"/>
+            </EntityType>
+            <EntityType Name="VisitasAll">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                    <PropertyRef Name="IsActiveEntity"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="data_chamado" Type="Edm.Date"/>
+                <Property Name="data_atendimento" Type="Edm.Date"/>
+                <Property Name="atendido" Type="Edm.Boolean"/>
+                <Property Name="descricao" Type="Edm.String" MaxLength="100"/>
+                <Property Name="observacao" Type="Edm.String" MaxLength="500"/>
+                <NavigationProperty Name="local" Type="DemoRota.Locais">
+                    <ReferentialConstraint Property="local_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <Property Name="local_ID" Type="Edm.Guid"/>
+                <Property Name="IsActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="true"/>
+                <Property Name="HasActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <NavigationProperty Name="DraftAdministrativeData" Type="DemoRota.DraftAdministrativeData" ContainsTarget="true"/>
+                <NavigationProperty Name="SiblingEntity" Type="DemoRota.VisitasAll"/>
+            </EntityType>
+            <EntityType Name="DraftAdministrativeData">
+                <Key>
+                    <PropertyRef Name="DraftUUID"/>
+                </Key>
+                <Property Name="DraftUUID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="CreationDateTime" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="CreatedByUser" Type="Edm.String" MaxLength="256"/>
+                <Property Name="DraftIsCreatedByMe" Type="Edm.Boolean"/>
+                <Property Name="LastChangeDateTime" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="LastChangedByUser" Type="Edm.String" MaxLength="256"/>
+                <Property Name="InProcessByUser" Type="Edm.String" MaxLength="256"/>
+                <Property Name="DraftIsProcessedByMe" Type="Edm.Boolean"/>
+            </EntityType>
+            <Action Name="draftActivate" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="DemoRota.Locais"/>
+                <ReturnType Type="DemoRota.Locais"/>
+            </Action>
+            <Action Name="draftEdit" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="DemoRota.Locais"/>
+                <Parameter Name="PreserveChanges" Type="Edm.Boolean"/>
+                <ReturnType Type="DemoRota.Locais"/>
+            </Action>
+            <Action Name="visited" IsBound="true">
+                <Parameter Name="in" Type="DemoRota.Visitas"/>
+            </Action>
+            <Annotations Target="DemoRota.EntityContainer/Locais">
+                <Annotation Term="Common.DraftRoot">
+                    <Record Type="Common.DraftRootType">
+                        <PropertyValue Property="ActivationAction" String="DemoRota.draftActivate"/>
+                        <PropertyValue Property="EditAction" String="DemoRota.draftEdit"/>
+                        <PropertyValue Property="PreparationAction" String="DemoRota.draftPrepare"/>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="DemoRota.Locais/nome">
+                <Annotation Term="Common.Label" String="Nome"/>
+            </Annotations>
+            <Annotations Target="DemoRota.Locais/endereco">
+                <Annotation Term="Common.Label" String="Endereço"/>
+            </Annotations>
+            <Annotations Target="DemoRota.Locais/cidade">
+                <Annotation Term="Common.Label" String="Cidade"/>
+            </Annotations>
+            <Annotations Target="DemoRota.Locais/bairro">
+                <Annotation Term="Common.Label" String="Bairro"/>
+            </Annotations>
+            <Annotations Target="DemoRota.Locais/estado">
+                <Annotation Term="Common.Label" String="Estado"/>
+            </Annotations>
+            <Annotations Target="DemoRota.Locais/IsActiveEntity">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="DemoRota.Locais/HasActiveEntity">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="DemoRota.Locais/HasDraftEntity">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="DemoRota.Locais/DraftAdministrativeData">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="DemoRota.Visitas">
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Label" String="Data Chamado"/>
+                            <PropertyValue Property="Value" Path="data_chamado"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Label" String="Nome"/>
+                            <PropertyValue Property="Value" Path="local/nome"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Label" String="Descrição"/>
+                            <PropertyValue Property="Value" Path="descricao"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Label" String="Cidade"/>
+                            <PropertyValue Property="Value" Path="local/cidade"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="DemoRota.Visitas/data_chamado">
+                <Annotation Term="Common.Label" String="Data Criação"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+            </Annotations>
+            <Annotations Target="DemoRota.Visitas/data_atendimento">
+                <Annotation Term="Common.Label" String="Data Atendimento"/>
+            </Annotations>
+            <Annotations Target="DemoRota.Visitas/atendido">
+                <Annotation Term="Common.Label" String="Atendido?"/>
+            </Annotations>
+            <Annotations Target="DemoRota.Visitas/descricao">
+                <Annotation Term="Common.Label" String="Descrição"/>
+            </Annotations>
+            <Annotations Target="DemoRota.Visitas/observacao">
+                <Annotation Term="Common.Label" String="Observação"/>
+            </Annotations>
+            <Annotations Target="DemoRota.EntityContainer/VisitasAll">
+                <Annotation Term="Common.DraftNode">
+                    <Record Type="Common.DraftNodeType">
+                        <PropertyValue Property="PreparationAction" String="DemoRota.draftPrepare"/>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="DemoRota.VisitasAll/data_chamado">
+                <Annotation Term="Common.Label" String="Data Criação"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+            </Annotations>
+            <Annotations Target="DemoRota.VisitasAll/data_atendimento">
+                <Annotation Term="Common.Label" String="Data Atendimento"/>
+            </Annotations>
+            <Annotations Target="DemoRota.VisitasAll/atendido">
+                <Annotation Term="Common.Label" String="Atendido?"/>
+            </Annotations>
+            <Annotations Target="DemoRota.VisitasAll/descricao">
+                <Annotation Term="Common.Label" String="Descrição"/>
+            </Annotations>
+            <Annotations Target="DemoRota.VisitasAll/observacao">
+                <Annotation Term="Common.Label" String="Observação"/>
+            </Annotations>
+            <Annotations Target="DemoRota.VisitasAll/IsActiveEntity">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="DemoRota.VisitasAll/HasActiveEntity">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="DemoRota.VisitasAll/HasDraftEntity">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="DemoRota.VisitasAll/DraftAdministrativeData">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="DemoRota.DraftAdministrativeData">
+                <Annotation Term="Common.Label" String="{i18n>Draft_DraftAdministrativeData}"/>
+                </Annotations>
+                <Annotations Target="DemoRota.DraftAdministrativeData/DraftUUID">
+                    <Annotation Term="UI.Hidden" Bool="true"/>
+                    <Annotation Term="Common.Label" String="{i18n>Draft_DraftUUID}"/>
+                    </Annotations>
+                    <Annotations Target="DemoRota.DraftAdministrativeData/CreationDateTime">
+                        <Annotation Term="Common.Label" String="{i18n>Draft_CreationDateTime}"/>
+                        </Annotations>
+                        <Annotations Target="DemoRota.DraftAdministrativeData/CreatedByUser">
+                            <Annotation Term="Common.Label" String="{i18n>Draft_CreatedByUser}"/>
+                            </Annotations>
+                            <Annotations Target="DemoRota.DraftAdministrativeData/DraftIsCreatedByMe">
+                                <Annotation Term="UI.Hidden" Bool="true"/>
+                                <Annotation Term="Common.Label" String="{i18n>Draft_DraftIsCreatedByMe}"/>
+                                </Annotations>
+                                <Annotations Target="DemoRota.DraftAdministrativeData/LastChangeDateTime">
+                                    <Annotation Term="Common.Label" String="{i18n>Draft_LastChangeDateTime}"/>
+                                    </Annotations>
+                                    <Annotations Target="DemoRota.DraftAdministrativeData/LastChangedByUser">
+                                        <Annotation Term="Common.Label" String="{i18n>Draft_LastChangedByUser}"/>
+                                        </Annotations>
+                                        <Annotations Target="DemoRota.DraftAdministrativeData/InProcessByUser">
+                                            <Annotation Term="Common.Label" String="{i18n>Draft_InProcessByUser}"/>
+                                            </Annotations>
+                                            <Annotations Target="DemoRota.DraftAdministrativeData/DraftIsProcessedByMe">
+                                                <Annotation Term="UI.Hidden" Bool="true"/>
+                                                <Annotation Term="Common.Label" String="{i18n>Draft_DraftIsProcessedByMe}"/>
+                                                </Annotations>
+                                            </Schema>
+                                        </edmx:DataServices>
+                                    </edmx:Edmx>

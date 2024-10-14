@@ -1,45 +1,54 @@
 namespace sinosbyte.demo.rotas;
 
-entity Localizacao {
+using {
+    cuid
+} from '@sap/cds/common';
 
-    key id       : UUID;
+entity Localizacao : cuid {
 
-        @Common.Label: 'Nome'
-        nome     : String(40);
+    @Common.Label: 'Nome'
+    nome     : String(40);
 
-        @Common.Label: 'Endereço'
-        endereco : String(100);
+    @Common.Label: 'Endereço'
+    endereco : String(100);
 
-        @Common.Label: 'Cidade'
-        cidade   : String(50);
+    @Common.Label: 'Cidade'
+    cidade   : String(50);
 
-        @Common.Label: 'Bairro'
-        bairro   : String(50);
+    @Common.Label: 'Bairro'
+    bairro   : String(50);
 
-        @Common.Label: 'Estado'
-        estado   : String(3);
+    @Common.Label: 'Estado'
+    estado   : String(3);
+    visitas  : Composition of many Visitas
+                   on visitas.local.ID = ID;
 }
 
-entity Acompanhamento {
-    key id               : UUID;
+entity Visitas : cuid {
+    @Common.Label: 'Data Criação'
+    data_chamado     : Date;
 
-        @Common.Label: 'Data Criação'
-        data_chamado     : Date;
+    @Common.Label: 'Data Atendimento'
+    data_atendimento : Date;
 
-        @Common.Label: 'Data Atendimento'
-        data_atendimento : Date;
+    @Common.Label: 'Atendido?'
+    atendido         : Boolean;
 
-        @Common.Label: 'Atendido?'
-        atendido         : Boolean;
+    @Common.Label: 'Descrição'
+    descricao        : String(100);
 
-        @Common.Label: 'Local'
-        localizacao      : Localizacao:id;
+    @Common.Label: 'Observação'
+    observacao       : String(500);
 
-        @Common.Label: 'Descrição'
-        descricao        : String(100);
+    @Common.Label: 'Em Rota'
+    rota             : Boolean;
 
-        @Common.Label: 'Observação'
-        observacao       : String(500);
-        local            : Association to one Localizacao
-                               on local.id = $self.localizacao;
+    local            : Association to one Localizacao;
+// local_ID         : String(50);
+}
+
+// Auto-fill reviewers and review dates
+annotate Visitas with {
+    //   reviewer @cds.on:{insert:$user};
+    data_chamado @cds.on: {insert: $now};
 }

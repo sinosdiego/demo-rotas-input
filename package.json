@@ -10,9 +10,24 @@
     "express": "^4"
   },
   "devDependencies": {
-    "@cap-js/sqlite": "^1"
+    "@cap-js/sqlite": "^1",
+    "@sap/ux-specification": "^1.108.16"
+  },
+  "cds": {
+    "requires": {
+      "db": "sqlite"
+    }
   },
   "scripts": {
-    "start": "cds-serve"
-  }
+    "start": "cds-serve",
+    "watch-visitas": "cds watch --open visitas/webapp/index.html?sap-ui-xx-viewCache=false",
+    "watch-zui5.locais": "cds watch --open zui5.locais/webapp/index.html?sap-ui-xx-viewCache=false",
+    "watch-zui5.visitas": "cds watch --open zui5.visitas/webapp/index.html?sap-ui-xx-viewCache=false",
+    "watch-zui5.rota": "cds watch --open zui5.rota/webapp/index.html?sap-ui-xx-viewCache=false"
+  },
+  "sapux": [
+    "app/visitas",
+    "app/zui5.locais",
+    "app/zui5.visitas"
+  ]
 }

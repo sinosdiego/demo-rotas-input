@@ -1,6 +1,15 @@
-id;nome;endereco;cidade;bairro;estado
-2f5ab0ae-617a-45fd-b650-f8fa1bbd6f85;Bairro Igara;;Canoas;Igara;RS
+ID;nome;endereco;cidade;bairro;estado
 b450a262-17b3-4ede-81d6-b472c07e0bca;Xis da 15;Av Padre Claret;Esteio;;RS
 a788f662-c282-4a88-9292-b24be36a1a62;Bourbon Shopping São Leopoldo;R. Primeiro de Março;São Leopoldo;Centro;RS
 1ced6416-e324-4d63-8497-7e3565ae34f8;O Bifão;R. São Jacó;Novo Hamburgo;Centro;RS
 82b17d4f-fd79-4105-95e8-f9a0f1f9bf8b;Arezzo & Co;R. Liberato Salzano;Campo Bom;Centro;RS
+6e7e1aa5-6f69-4a23-81ab-5458dc3ddaa9;Praça de Alimentação;Av. Assis Brasil;Porto Alegre;Lindóia;RS
+3aade4a2-8d36-4c9e-926b-f6d02d9d18d3;Parque da Redenção;Av. José Bonifácio;Porto Alegre;Cidade Baixa;RS
+4d2cda11-b9a4-4e15-8401-20c0b6e53728;Shopping Iguatemi;Av. João Wallig;Porto Alegre;Passo da Areia;RS
+87b6d9f0-efc7-4ac1-ae4b-131251e0859d;BarraShoppingSul;Av. Diário de Notícias;Porto Alegre;Cristal;RS
+9fd01b2c-7571-4ee1-8d38-f0e2d8cf55c6;Arena do Grêmio;Av. Padre Leopoldo Brentano;Porto Alegre;Hummaitá;RS
+b0721a4a-e757-45bb-9f4a-623f029ed92d;Estádio Beira-Rio;Av. Padre Cacique;Porto Alegre;Praia de Belas;RS
+f1ad3fbc-13b5-44f6-a740-21f56b7e4b8a;Estádio Olímpico Monumental;Av. Padre Leopoldo Brentano;Porto Alegre;Cristal;RS
+9fb5890a-2f43-4d0e-98f1-d3ab31e6d0fb;Catedral Metropolitana de Porto Alegre;Praça Matriz;Porto Alegre;Centro Histórico;RS
+2f9517e7-65ab-4dd6-8a2f-421cc4e63544;Parque Moinhos de Vento (Parcão);Av. Goethe;Porto Alegre;Moinhos de Vento;RS
+a7e0c98c-42a4-4f79-a5a0-cf3b38d4d742;Usina do Gasômetro;Av. Presidente João Goulart;Porto Alegre;Centro Histórico;RS

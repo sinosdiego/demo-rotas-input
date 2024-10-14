@@ -1,0 +1,75 @@
+<mvc:View controllerName="br.com.sinosbyte.zui5.rota.controller.Rotas"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns:gmaps="openui5.googlemaps"
+    xmlns:smartList="sap.ui.comp.smartlist"
+    xmlns:core="sap.ui.core"
+	xmlns:l="sap.ui.layout"
+    xmlns="sap.m">
+	<Page id="page" title="{i18n>title}">
+		<l:FixFlex id="layFlex" class="fixFlexHorizontal" vertical="false">
+			<l:fixContent>
+				<VBox id="menuList">
+					<!-- <Image src="{img>/products/pic1}" densityAware="true" /> -->
+					<!-- <smartList:SmartList id="ItemsST" entitySet="Rota"  header="Locais"
+						showRowCount="true" showFullScreenButton="true" enableAutoBinding="true"
+						selectFields="data_chamado,descricao,observacao,nome,endereco,cidade,bairro,estado">
+						<smartList:listItemTemplate>
+							<StandardListItem id="sli" title="{nome}" info="{data_chamado}"
+								description="{endereco} - {cidade} - {bairro} - {estado}" activeIcon="true" icon=""/>
+						</smartList:listItemTemplate>
+					</smartList:SmartList> -->			
+					<List
+						id="list"
+						mode="MultiSelect"
+						headerText="Rota de Visitação"
+						selectionChange="handleSelectChange"
+						items="{
+							path: '/Rota'
+						}">
+						<items>
+							<StandardListItem id='locais'
+								title="{nome}"
+								description="{endereco} - {cidade} - {bairro} - {estado}"
+								iconInset="false"
+								infoStateInverted="true" />
+						</items>
+					</List>					
+					<Toolbar id='tlb'>
+						<!-- <ToolbarSpacer id="tlbs"/> -->
+						<Button text="Visita Realizada" id="btnTes" press="onPress" type="Accept" width="100%"/>
+						<!-- <Button text="Reject" press="onPress" type="Reject"/> -->
+						<!-- <Button icon="sap-icon://overflow" press="onOpen" visible="{range>/isPhoneOrTablet}"/> -->
+					</Toolbar>
+				</VBox>		
+			</l:fixContent>
+			<l:flexContent>
+				<gmaps:Map id="gmap" height="1000px" zoom="12" 
+					apiKey="AIzaSyA63ZYPAHpOv8QCbWjqAns86P9VAKzXv7g">
+					<!-- Adicioanr markers="{/Rota}" na tag Map-->
+					<!-- <gmaps:markers >
+						<gmaps:Marker id="maker2" info="{nome} - {cidade}" lat="-29.795055432	023386" lng="-51.14944913172376"/>
+					</gmaps:markers>									 -->
+					<gmaps:directions>
+
+						<gmaps:Directions id="rota1" 
+										startAddress="Unisinos - São Leopoldo"  
+										endAddress="Sinosbyte - São Leopoldo" waypoints="{/Rota}" optimizeWaypoints="true" >
+							<gmaps:Waypoint id="point" location="{nome} - {cidade}" stopover="true"/>
+
+						</gmaps:Directions>
+					</gmaps:directions>
+				</gmaps:Map>   
+			</l:flexContent>
+		</l:FixFlex>	
+	</Page>
+    <!-- <Page id="page" title="{i18n>title}">
+			<smartList:SmartList id="ItemsST" entitySet="Rota"  header="Locais"
+				showRowCount="true" showFullScreenButton="true" enableAutoBinding="true"
+				selectFields="data_chamado,descricao,observacao,nome,endereco,cidade,bairro,estado">
+				<smartList:listItemTemplate>
+					<StandardListItem id="sli" title="{nome}" info="{data_chamado}"
+						description="{endereco} - {cidade} - {bairro} - {estado}"/>
+				</smartList:listItemTemplate>
+			</smartList:SmartList>
+    </Page> -->
+</mvc:View>

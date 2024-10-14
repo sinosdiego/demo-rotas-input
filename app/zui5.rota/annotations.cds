@@ -1,0 +1,1 @@
+using DemoRota as service from '../../srv/demo-service';

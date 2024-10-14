@@ -1,0 +1,50 @@
+<mvc:View controllerName="br.com.sinosbyte.zui5.rota.controller.Rotas"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns:gmaps="openui5.googlemaps"
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m">
+    <Page id="page" title="{i18n>title}">
+        <gmaps:Map id="gmap" height="800px" zoom="12" lat="-29.76028" lng="-51.14722" 
+                            apiKey="AIzaSyA63ZYPAHpOv8QCbWjqAns86P9VAKzXv7g">
+            <!-- <gmaps:markers>
+                <gmaps:Marker id="marker1" lat="-29.70824" lng="-51.15724" info="Novo Hamburgo" draggable="true"/>
+            </gmaps:markers> -->
+            <gmaps:directions >
+                <gmaps:Directions id="rota1" 
+                                startAddress="São Leopoldo, RS" 
+                                endAddress="São Leopoldo, RS">
+                <!-- <gmaps:Directions id="rota1" > -->
+                <!-- Exemplo OData V4 -->
+                <!-- https://ui5.sap.com/#/entity/sap.ui.model.odata.v4.ODataModel/sample/sap.ui.core.sample.odata.v4.SalesOrders -->
+                    <gmaps:waypoints>
+                        <gmaps:Waypoint id="point1" location="Sapucaia do Sul, RS" stopover="true"/>
+                        <gmaps:Waypoint id="point2" location="Triunfo, RS"         stopover="true"/>
+                        <gmaps:Waypoint id="point3" location="Canoas, RS"          stopover="true"/>
+                        <gmaps:Waypoint id="point4" location="Porto Alegre, RS"    stopover="true"/>
+                    </gmaps:waypoints>
+                </gmaps:Directions>
+            </gmaps:directions>
+        </gmaps:Map>    
+        <!-- <IconTabBar
+		id="idIconTabBarStretchContent"
+		stretchContentHeight="true"
+		backgroundDesign="Transparent"
+		applyContentPadding="false"
+		expanded="{device>/isNoPhone}"
+		class="sapUiResponsiveContentPadding">
+        <items>
+            <- - <IconTabFilter id="produtos" text="Produtos" key="products">
+				<Text text="Lista de produtos ..." />
+			</IconTabFilter>
+			<IconTabFilter id="centros" text="Centros" key="centers">
+				<Text text="Centros listados aqui ..." />
+			</IconTabFilter> - ->
+            <IconTabFilter id="rotas" text="Rotas" key="routes">
+                <content>
+                    
+                </content>
+            </IconTabFilter>    
+        </items>
+        </IconTabBar> -->
+    </Page>
+</mvc:View>
